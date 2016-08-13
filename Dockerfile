@@ -13,7 +13,6 @@ RUN apt-get -qq update && \
     apt-get install -qqy --no-install-recommends \
         wget \
         build-essential \
-        iputils-ping
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD https://dl.google.com/android/repository/android-ndk-${VERSION_NDK}-linux-x86_64.zip /ndk.zip
