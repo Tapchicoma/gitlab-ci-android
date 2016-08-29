@@ -30,7 +30,7 @@ RUN apt-get -qq update && \
         build-essential \
         expect \
         file \
-        libmagic1
+        libmagic1 \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Fix the java certs
