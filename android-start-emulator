@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+WAIT_FOR_EMULATOR=$(which android-wait-for-emulator)
+
+SHELL=/bin/bash emulator -noaudio -no-window -gpu off -avd $@ &
+
+echo "Waiting for device to connect to adb"
+adb wait-for-device
+
+echo "Waiting for emulator to boot"
+exec ${WAIT_FOR_EMULATOR}

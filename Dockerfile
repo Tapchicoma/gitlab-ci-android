@@ -10,7 +10,7 @@ ENV VERSION_NDK "r12b"
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV ANDROID_HOME "/sdk"
-ENV PATH "$PATH:${ANDROID_HOME}/tools"
+ENV PATH "$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
 
 ENV ANDROID_NDK_HOME "/ndk"
 ENV PATH "$PATH:${ANDROID_NDK_HOME}/"
@@ -29,6 +29,8 @@ RUN apt-get -qq update && \
         wget \
         build-essential \
         expect \
+        file \
+        libmagic1
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Fix the java certs
@@ -65,18 +67,18 @@ RUN chmod +x /usr/local/bin/android-wait-for-emulator
 ADD android-update-sdk /usr/local/bin/android-update-sdk
 RUN chmod +x /usr/local/bin/android-update-sdk
 
+ADD android-start-emulator /usr/local/bin/android-start-emulator
+RUN chmod +x /usr/local/bin/android-start-emulator
+
 
 # Install the SDK stuff
+RUN which android
 
 RUN android-update-sdk "platform-tools,\
-    tools,\
-    build-tools-21,\
     build-tools-21.0.1,\
     build-tools-21.0.2,\
-    build-tools-21.1,\
     build-tools-21.1.1,\
     build-tools-21.1.2,\
-    build-tools-22,\
     build-tools-22.0.1,\
     build-tools-23.0.0,\
     build-tools-23.0.1,\
@@ -86,9 +88,54 @@ RUN android-update-sdk "platform-tools,\
     android-22,\
     android-23,\
     android-24,\
-    addon-google_apis_x86-google-21,\
     extra-android-support,\
     extra-android-m2repository,\
     extra-google-m2repository,\
     extra-google-google_play_services,\
-    sys-img-armeabi-v7a-android-21"
+    sys-img-armeabi-v7a-android-21,\
+    sys-img-armeabi-v7a-google_apis-21,\
+    sys-img-armeabi-v7a-android-22,\
+    sys-img-armeabi-v7a-google_apis-22,\
+    sys-img-armeabi-v7a-android-23,\
+    sys-img-armeabi-v7a-google_apis-23,\
+    sys-img-armeabi-v7a-android-24,\
+    sys-img-armeabi-v7a-google_apis-24"
+
+RUN which adb
+RUN which android
+
+# Create the default emulators
+RUN echo "no" | android create avd \
+                --force \
+                --device "Nexus 5" \
+                --name nexus5_21 \
+                --target android-21 \
+                --abi default/armeabi-v7a \
+                --skin WVGA800 \
+                --sdcard 512M
+
+RUN echo "no" | android create avd \
+                --force \
+                --device "Nexus 5" \
+                --name nexus5_22 \
+                --target android-22 \
+                --abi default/armeabi-v7a \
+                --skin WVGA800 \
+                --sdcard 512M
+
+RUN echo "no" | android create avd \
+                --force \
+                --device "Nexus 5" \
+                --name nexus5_23 \
+                --target android-23 \
+                --abi default/armeabi-v7a \
+                --skin WVGA800 \
+                --sdcard 512M
+
+# Warm up the emulators
+RUN android-start-emulator nexus5_21 && adb -s emulator-5554 emu kill && \
+    android-start-emulator nexus5_22 && adb -s emulator-5554 emu kill && \
+    android-start-emulator nexus5_23 && adb -s emulator-5554 emu kill
+
+
+CMD ["/bin/bash"]
