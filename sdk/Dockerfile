@@ -89,14 +89,6 @@ RUN android-update-sdk "platform-tools,\
     extra-android-support,\
     extra-android-m2repository,\
     extra-google-m2repository,\
-    extra-google-google_play_services,\
-    sys-img-armeabi-v7a-android-21,\
-    sys-img-armeabi-v7a-google_apis-21,\
-    sys-img-armeabi-v7a-android-22,\
-    sys-img-armeabi-v7a-google_apis-22,\
-    sys-img-armeabi-v7a-android-23,\
-    sys-img-armeabi-v7a-google_apis-23,\
-    sys-img-armeabi-v7a-android-24,\
-    sys-img-armeabi-v7a-google_apis-24"
+    extra-google-google_play_services"
 
 CMD ["/bin/bash"]
