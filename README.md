@@ -2,6 +2,9 @@
 
 This build runner can build android projects and execute both unit and instrumentation tests
 
+SDK and NDK images are included in the `sdk` directory. Dockerfile that pulls in emulators in `emulator`
+directory.
+
 With inspiration taken from:
  - https://github.com/reddit/docker-android-build/blob/master/Dockerfile
  - https://github.com/jangrewe/gitlab-ci-android

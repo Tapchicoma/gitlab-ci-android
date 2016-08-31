@@ -72,8 +72,6 @@ RUN chmod +x /usr/local/bin/android-start-emulator
 
 
 # Install the SDK stuff
-RUN which android
-
 RUN android-update-sdk "platform-tools,\
     build-tools-21.0.1,\
     build-tools-21.0.2,\
@@ -100,42 +98,5 @@ RUN android-update-sdk "platform-tools,\
     sys-img-armeabi-v7a-google_apis-23,\
     sys-img-armeabi-v7a-android-24,\
     sys-img-armeabi-v7a-google_apis-24"
-
-RUN which adb
-RUN which android
-
-# Create the default emulators
-RUN echo "no" | android create avd \
-                --force \
-                --device "Nexus 5" \
-                --name nexus5_21 \
-                --target android-21 \
-                --abi default/armeabi-v7a \
-                --skin WVGA800 \
-                --sdcard 512M
-
-RUN echo "no" | android create avd \
-                --force \
-                --device "Nexus 5" \
-                --name nexus5_22 \
-                --target android-22 \
-                --abi default/armeabi-v7a \
-                --skin WVGA800 \
-                --sdcard 512M
-
-RUN echo "no" | android create avd \
-                --force \
-                --device "Nexus 5" \
-                --name nexus5_23 \
-                --target android-23 \
-                --abi default/armeabi-v7a \
-                --skin WVGA800 \
-                --sdcard 512M
-
-# Warm up the emulators
-RUN android-start-emulator nexus5_21 && adb -s emulator-5554 emu kill && \
-    android-start-emulator nexus5_22 && adb -s emulator-5554 emu kill && \
-    android-start-emulator nexus5_23 && adb -s emulator-5554 emu kill
-
 
 CMD ["/bin/bash"]
