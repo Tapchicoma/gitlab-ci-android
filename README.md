@@ -6,6 +6,7 @@ SDK and NDK images are included in the `sdk` directory. Dockerfile that pulls in
 directory.
 
 With inspiration taken from:
+ - https://github.com/51systems/gitlab-ci-android
  - https://github.com/reddit/docker-android-build/blob/master/Dockerfile
  - https://github.com/jangrewe/gitlab-ci-android
  - https://hub.docker.com/r/neroinc/fedora-android/
