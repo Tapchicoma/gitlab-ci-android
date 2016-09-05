@@ -2,7 +2,7 @@
 # GitLab CI Android Runner
 #
 #
-FROM ubuntu:16.04
+FROM tapchicoma/gitlab-ci-multirunner
 
 ENV VERSION_SDK_TOOLS "25.1.7"
 ENV VERSION_NDK "r12b"
